@@ -1,0 +1,74 @@
+<div *ngIf="loading" class="loading-container flex align-items-center justify-content-center w-full h-full absolute top-0 left-0">
+    <img src="loading.gif" alt="Loading..." class="loading-gif">
+</div>
+
+<div *ngIf="!loading">
+    <div class="logo-container flex align-items-end justify-content-end">
+        <img src="logo.svg" alt="Create-solution" class="logo-container-logo" />
+    </div>
+    <p-toast />
+    <div class="create-solution-container">
+        <div class="text-3xl line-height-2 font-semibold create-solution-header mb-4">Create New Solution</div>
+
+        <form [formGroup]="createSolutionForm"  (ngSubmit)="createSolution()"
+            class="flex flex-column gap-4">
+            <div class="flex flex-column">
+                <div class="flex flex-wrap gap-3">
+                    <label for="solutionId" class="integer-only font-semibold">
+                        Solution ID
+                        <img src="info.png" alt="info" class="info-icon"
+                            pTooltip="Unique identifier automatically generated for the solution. This cannot be edited."
+                            [tooltipOptions]="tooltipOptions" />
+                    </label>
+                </div>
+                <input type="text" class="solution-id" formControlName="solutionId" placeholder="SOL-ID"  pInputText 
+                    name="solutionId"  />
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+                <div class="flex flex-column">
+                    <div class="flex flex-wrap gap-2">
+                        <label for="businessUnit" class="unit-cl font-semibold">
+                            Unit
+                            <label for="businessUnit" class="important-icon font-semibold">*</label>
+                            <img src="info.png" alt="info" class="info-icon" 
+                                pTooltip="Describe the key challenges or problems faced by the business that the solution aims to address." tooltipStyleClass="custom-tooltip"
+                                [tooltipOptions]="tooltipOptions" />
+                        </label>
+                    </div>
+                    <input type="text" class="business-Unit" formControlName="unitName" placeholder="Enter Unit Name" pInputText
+                        name="unitName" required maxlength="2" minlength="2" pattern="^[A-Za-z]*$" />
+                </div>
+                <div class="flex flex-column mb-4">  
+                    <div class="flex flex-wrap gap-2">
+                        <label for="solutionType" class="integer-only font-semibold">
+                            Solution Type</label>
+                        <label for="solutionType" class="important-icon font-semibold">*</label>
+                        <img src="info.png" alt="info" class="info-icon"
+                            pTooltip="Select the appropriate solution type from the dropdown list. Required field."
+                            [tooltipOptions]="tooltipOptions" />
+                    </div>
+                    <p-dropdown [options]="solutionType" styleClass="solution-name-type" formControlName="selectSolutionType" optionLabel="name"
+                        [showClear]="false" placeholder="Select solution type" name="solutionType" required />
+                </div>
+            </div>
+
+            <div class="flex flex-column">
+                <div class="flex flex-wrap">
+                    <label for="solutionName" class="solution-name-cl font-semibold">Solution Name (30 characters
+                        Max)
+                        <label for="solutionName" class="important-icon font-semibold">*</label>
+                        <img src="info.png" alt="info" class="info-icon"
+                            pTooltip="Enter a descriptive and meaningful name for the solution. Required field."
+                            [tooltipOptions]="tooltipOptions" />
+                    </label>
+                </div>
+                <input type="text" class="solution-name" placeholder="Enter solution name" pInputText  maxlength="30"
+                    formControlName="solutionName" name="solutionName" required />
+            </div>
+            <span *ngIf="(createSolutionForm.valid && userCreatedStatus)" class="solution-create-success-label">Solution is created. Click on get started to proceed to next steps</span>
+            <button type="submit" class="submit-btn" *ngIf="(!userCreatedStatus)" [disabled]="createSolutionForm.invalid" >{{'Create Solution'}}</button>
+            <button type="submit" class="submit-btn" *ngIf="(createSolutionForm.valid && userCreatedStatus)" (click)="openSolution(responseSolutionData)">{{ 'Get Started'}}</button>
+        </form>
+    </div>
+</div>

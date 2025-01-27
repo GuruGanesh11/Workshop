@@ -1,0 +1,171 @@
+.logo-container-logo {
+    width: 54px;
+    height: 54px;
+    margin-right: 40px;
+    margin-top: 29px;
+}
+.create-solution-container {
+    margin: 30px 100px 0px 13px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border: 0.5px solid #DBD3D3;
+    padding: 22px;
+    border-radius: 10px;
+    .create-solution-header {
+        color: #216B40;
+    }
+    .integer-only {
+        font-size: 21px;
+        line-height: 26px;
+        color: #4C986E;
+    }
+    .info-icon{
+        width: 20px;
+        height: 20px;
+        margin-left: 12px;
+    }
+    .solution-name {
+        width: 573px;
+        height: 74px;
+        background-color: #F7F7F7;
+        border: 1px solid #8AEFAF;
+        box-shadow: 0px 4px 4px 0px #00000040;
+        border-radius: 7px;
+        padding: 16px;
+        font-size: 21px;
+        line-height: 25px;
+    }
+    .solution-id {
+        width: 573px;
+        height: 74px;
+        background-color: #F7F7F7;
+        border: 1px solid #8AEFAF;
+        box-shadow: 0px 4px 4px 0px #00000040;
+        border-radius: 7px;
+        padding: 16px;
+        font-size: 21px;
+        line-height: 25px;
+    }
+    .unit-cl{
+        font-size: 21px;
+        line-height: 26px;
+        color: #4C986E;
+    }
+    .important-icon{
+        font-size: 21px;
+        line-height: 26px;
+        color: red;
+    }
+    .solution-name-cl{
+        font-size: 18px;
+        line-height: 26px;
+        color: #4C986E;
+    }
+    .solution-create-success-label{
+        color: #16A34A;
+        font-size: 20px;
+        margin-left: -8px;
+     }
+     .submit-btn:disabled {
+        background: #E5E5E5;
+        color: #B2AFAF;
+        border: 1px solid #B2AFAF;
+        padding: 15px;
+        width: 573px;
+        height: 74px;
+        font-size: 22px;
+        cursor: pointer;
+        border-radius: 7px;
+        box-shadow: 0px 4px 4px 0px #00000040;
+    }
+    .submit-btn {
+        background: #16A34A;
+        color: #C4E7CC;
+        width: 573px;
+        height: 74px;
+    }
+}
+.business-Unit{
+    width: 220px;
+    height: 74px;
+    background-color: #F7F7F7;
+        border: 1px solid #8AEFAF;
+        box-shadow: 0px 4px 4px 0px #00000040;
+        border-radius: 7px;
+        padding: 16px;
+        font-size: 21px;
+        line-height: 25px;
+}
+
+::ng-deep {
+    .business-Unit-custom-dropdown {
+        width: 220px !important;
+    }
+    .solution-name-type{
+        width: 345px !important;
+    }
+    .p-dropdown-label{
+        color: #6B7688;
+    }
+    .p-dropdown {
+        width: 573px;
+        height: 74px;        
+        box-shadow: 0px 4px 4px 0px #00000040;
+        border: 1px solid #8AEFAF;
+        font-size: 18px;
+        line-height: 21px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        border-radius: 7px;
+        .p-dropdown-items {
+            border: 1px solid #8AEFAF;
+            border-radius: 7px;
+        }
+        .p-dropdown-clear-icon {
+            color: #6b7280;
+            top: 29px;
+            right: 4rem;
+        }
+        .p-dropdown-panel {
+            background-color: white;
+        }
+        .p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+            line-height: 25px;
+            color: #6B7688;
+            font-size: 21px;
+            padding: 19px 18px;
+            font-weight: 600;
+        }
+         .p-dropdown-label {
+            font-size: 21px;
+            line-height: 25px;
+         }
+         .p-placeholder {
+            line-height: 25px;
+            color: #6b7280;
+            font-size: 21px;
+        } 
+    }
+
+    .p-tooltip {
+        .p-tooltip-arrow {
+          background-color: #FFFFFF;
+        }
+        .p-tooltip-text {
+          border: 1px solid #919090;
+          color: #757E8F;
+          background-color: #FFFFFF;
+          font-weight: 700;
+        }
+      }
+}
+  
+.border-circle{
+    height: 38px;
+    width: 38px;
+    border-radius: 50%;
+    padding: 3px;
+    border: 2px solid #16A34A;
+    font-size: 12px;
+}

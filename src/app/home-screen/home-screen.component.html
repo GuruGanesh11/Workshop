@@ -1,0 +1,85 @@
+<div>
+    <div *ngIf="loading" class="loading-container flex align-items-center justify-content-center w-full h-full absolute top-0 left-0">
+        <img src="loading.gif" alt="Loading..." class="loading-gif">
+    </div>
+    <div class="flex justify-content-end align-items-center mb-4 m-3">
+        <div class="logo-container flex">
+            <h3 class="text-right mr-1">Welcome, {{authUserName}}</h3>
+            <img src="logo.svg" alt="Create-solution" class="logo-container-logo" />
+        </div>
+    </div>
+    <div class="flex justify-content-center  ">
+
+        <div class="workbench justify-content-center bg-white border-round-xl shadow-5 ">
+            <div class="flex pr-2 pt-1 justify-content-end">
+                <img src="logout-img.png" alt="logout-img" class="logout-img" (keydown.enter)="logoutAccount()" (click)="logoutAccount()" />
+            </div>
+            <div class="welcome ml-3 text-lg font-bold flex justify-content-center align-items-center">Hello!
+                Welcome to IHA Workbench</div>
+
+            <div class="flex justify-content-center">
+                <div class="flex flex-column w-11 justify-content-center align-items-center">
+                    <div>
+                        <div class=" solution-box flex flex-wrap pt-5 pb-5 ">
+                            <div class="create-solution justify-content-center align-items-center border-1 border-round-xl  flex flex-wrap gap-2"
+                            [routerLink]="['/pre-solution/create-solution']">
+
+                                <div class="m-1">
+                                    <img src="createsolution.png" alt="Create-solution" />
+                                </div>
+                                <div
+                                    class="solution-login flex justify-content-center align-items-center font-semibold">
+                                    Create New <br> Solution</div>
+
+                            </div>
+
+                            <div class="create-solution justify-content-center align-items-center border-1 border-round-xl flex flex-wrap gap-2"
+                            [routerLink]="['/pre-solution/view-solution']">
+                                <div class="m-3">
+                                    <img src="solution.svg" alt="View-solution" />
+                                </div>
+                                <div class="solution-login flex justify-content-center pt-3 font-semibold">View Your
+                                    Existing Solutions</div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="font-bold text-lg ml-4 p-2">How to Use Workbench?</div>
+
+                        <div class="flex flex-column justify-content-center gap-3">
+                            <div>
+                                <div class="font-bold text-base ml-5">What is Workbench?</div>
+                                <div class=" text-base ml-5">Workbench is an automated SDLC software that streamlines
+                                    project planning, testing, deployment, and collaboration with integrated tools and
+                                    automation.</div>
+                            </div>
+
+                            <div>
+                                <div class="font-bold text-base ml-5">Who can use Workbench?</div>
+                                <div class=" text-base ml-5">Workbench is ideal for software development teams, QA
+                                    testers, and project managers looking to enhance efficiency and maintain
+                                    standardized processes.</div>
+                            </div>
+
+                            <div>
+                                <div class="font-bold text-base ml-5">What are the key features of Workbench?</div>
+                                <div class=" text-base ml-5">Key features include requirement tracking, test case
+                                    management, deployment automation, real-time insights, and compliance monitoring
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p-button class=" font-semibold border-round-md  p-3 flex justify-content-end " (onClick)="downloadWorkbenchManual()">Download Manual <div
+                    class="flex align-items-center download-icon justify-content-center cursor-pointer p-1 "
+                    style="margin-left: 8px;">
+                    <i class="fa-solid download-icon-color text-2xl fa-arrow-down"></i>
+                </div></p-button>
+
+        </div>
+
+    </div>

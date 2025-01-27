@@ -1,0 +1,33 @@
+<div *ngIf="sidebarVisible" class="sidebar" [ngClass]="isSideNavOpened ? 'open' : ''">
+    <div class="flex flex-wrap gap-3 align-items-center ">
+      <i
+      [ngClass]="isSideNavOpened ? 'bx-menu-alt-right' : 'bx-menu'"
+      (click)="toggleSideBar()" (keydown.enter)="toggleSideBar()"
+      class="fa fa-bars"
+      id="btn"
+      ></i>
+      <div *ngIf="isSideNavOpened" class="logo_name_menu">Menu</div>
+    </div>
+    <div class="horizontal-line"></div>
+    <div class="flex align-items-center cursor-pointer" [routerLink]="['/pre-solution/create-solution']">
+      <i class="fa-solid fa-plus"></i>
+      <div *ngIf="isSideNavOpened" class="add-view-solution font-bold">Create &<br>View Solutions</div>
+    </div>
+    
+    <ul class="nav-list" *ngIf="navItems">
+      <li *ngFor="let navItem of navItems">
+        <a
+        [routerLink]="navItem.url"
+          routerLinkActive="active-nav-item"
+          (click)="setActivePAge(navItem)"
+        >
+          <i
+            [ngClass]="navItem.icon"
+            aria-hidden="true"
+            title="{{ navItem.name }}"
+          ></i>
+          <span class="links_name ">{{ navItem.name }}</span>
+        </a>
+      </li>
+    </ul>
+</div>

@@ -1,0 +1,166 @@
+<div class="flex flex-column justify-content-between gap-4 w-full h-full">
+    <span class=" font-semibold input-context-text question-heading-title mx-3"> Input to be gathered design workshop </span>
+    <div class="flex flex-column justify-content-between gap-4 h-full mx-3">
+        <div class="flex flex-column justify-content-between">
+            <div class="flex flex-column gap-2">
+
+                <div class="flex justify-content-end align-items-center">
+                    <div class="flex gap-2">
+                        <i appClickable [ngStyle]="{'pointer-events': !addQuestionVisible  ? 'auto' : 'none'}"
+                            [ngClass]="{'text-black': true, 'text-gray': false}"
+                            class="fa-solid fa-add edit-delete-icon cursor-pointer text-lg"
+                            (keydown.enter)="openAddQuestionDialog()" (click)="openAddQuestionDialog()">
+                        </i>
+                        <i [ngClass]="{'text-black': isEditMode, 'text-gray': !isEditMode}"
+                            class="fa-solid fa-pen edit-delete-icon cursor-pointer text-lg"
+                            (keydown.enter)="toggleEditMode()" (click)="toggleEditMode()"></i>
+
+                        <div class="card flex justify-content-center">
+                            <i class="fa-regular text-black fa-trash-can edit-delete-icon cursor-pointer text-lg"
+                                [ngStyle]="{'pointer-events': !isEditMode  ? 'auto' : 'none'}"
+                                (keydown.enter)="showDeleteConfirmDialog()" (click)="showDeleteConfirmDialog()"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-container flex flex-column gap-5 border-1 overflow-y-auto ">
+                    <!-- Functional -->
+                    <div class="flex flex-column gap-2 ">
+                        <span class="question-type-text">Functional</span>
+                        <div class="flex flex-column">
+                            <div class="flex flex-row gap-1" *ngFor="let question of questionList; let i = index">
+
+                                <div *ngIf="question.category == 'Functional' || question.category == 'FUNCTIONAL'"
+                                    class="flex flex-row flex-warp align-items-start justify-content-between gap-2 mb-2">
+                                    <p-checkbox [(ngModel)]="question.checked" class="custom-checkbox" [binary]="true"
+                                        inputId="binary" (ngModelChange)="checkBoxChecked()" />
+                                    <div class="text-sm line-height-3  " *ngIf="!question.checked || !isEditMode">
+                                        <span
+                                            [ngStyle]="{'color': question.tag == 'Relevant' ||  question.tag == 'Irrelevant' ? question.tag == 'Relevant' ? 'green' : 'red' : 'black' }">{{question.question}}
+                                        </span>
+                                    </div>         
+                                        <textarea class="text-sm border-2 border-round-xl shadow-6" *ngIf="question.checked && isEditMode" rows="2" cols="38" pInputTextarea
+                                        [autoResize]="true"  [(ngModel)]="question.question"></textarea>
+                                        
+                                    <i *ngIf="question.checked && isEditMode"
+                                        class="fa-solid fa-xmark my-auto close-icon cursor-pointer"
+                                        (keydown.enter)="cancelEdit(question)" (click)="cancelEdit(question)"></i>
+
+                                    <i class="fa-solid my-auto tick-icon mr-1 fa-check pl-2 cursor-pointer"
+                                        *ngIf="question.checked && isEditMode"
+                                        (keydown.enter)="updateQuestion(question)" (click)="updateQuestion(question)">
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Technical -->
+                    <div class="flex flex-column gap-2 ">
+                        <span class="question-type-text">Technical</span>
+                        <div class="flex flex-column">
+                            <div class="flex flex-row gap-1" *ngFor="let question of questionList; let i = index">
+                                <div *ngIf="question.category == 'Technical' || question.category == 'TECHNICAL'"
+                                    class="flex flex-row flex-warp align-items-start justify-content-between gap-2 mb-2">
+                                    <p-checkbox [(ngModel)]="question.checked" class="custom-checkbox" [binary]="true"
+                                        inputId="binary" (ngModelChange)="checkBoxChecked()" />
+                                    <div class="text-sm line-height-3  " *ngIf="!question.checked || !isEditMode">
+                                        <span
+                                            [ngStyle]="{'color': question.tag == 'Relevant' ||  question.tag == 'Irrelevant' ? question.tag == 'Relevant' ? 'green' : 'red' : 'black' }">{{question.question}}
+                                        </span>
+                                    </div>           
+                                        <textarea class="text-sm border-2 border-round-xl shadow-6" *ngIf="question.checked && isEditMode" rows="2" cols="38" pInputTextarea
+                                        [autoResize]="true" [(ngModel)]="question.question"></textarea>
+                                       
+                                    <i *ngIf="question.checked && isEditMode"
+                                        class="fa-solid fa-xmark my-auto close-icon cursor-pointer"
+                                        (keydown.enter)="cancelEdit(question)" (click)="cancelEdit(question)"></i>
+
+                                    <i class="fa-solid my-auto tick-icon mr-1 fa-check pl-2 cursor-pointer"
+                                        *ngIf="question.checked && isEditMode"
+                                        (keydown.enter)="updateQuestion(question)" (click)="updateQuestion(question)">
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Npn Technical -->
+                    <div class="flex flex-column gap-2 ">
+                        <span class="question-type-text">Non Technical</span>
+                        <div class="flex flex-column">
+                            <div class="flex flex-row gap-1" *ngFor="let question of questionList; let i = index">
+                                <div *ngIf="question.category == 'Non Technical' || question.category == 'NON TECHNICAL '"
+                                    class="flex flex-row flex-warp align-items-start justify-content-between gap-2 mb-2">
+                                    <p-checkbox [(ngModel)]="question.checked" class="custom-checkbox" [binary]="true"
+                                        inputId="binary" (ngModelChange)="checkBoxChecked()" />
+                                        
+                                    <div class="text-sm line-height-3  " *ngIf="!question.checked || !isEditMode">
+                                        <span
+                                            [ngStyle]="{'color': question.tag == 'Relevant' ||  question.tag == 'Irrelevant' ? question.tag == 'Relevant' ? 'green' : 'red' : 'black' }">{{question.question}}
+                                        </span>
+                                    </div>  
+                                    <textarea class="text-sm border-2 border-round-xl shadow-6" *ngIf="question.checked && isEditMode" rows="2" cols="38" pInputTextarea
+                                         [autoResize]="true" [(ngModel)]="question.question"></textarea>
+                                    <i *ngIf="question.checked && isEditMode"
+                                        class="fa-solid fa-xmark my-auto close-icon cursor-pointer"
+                                        (keydown.enter)="cancelEdit(question)" (click)="cancelEdit(question)"></i>
+
+                                    <i class="fa-solid my-auto tick-icon mr-1 fa-check pl-2 cursor-pointer"
+                                        *ngIf="question.checked && isEditMode"
+                                        (keydown.enter)="updateQuestion(question)" (click)="updateQuestion(question)">
+                                    </i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex align-items-center justify-content-between gap-3 my-3">
+            <button type="submit" class="submit-btn w-full" (click)="saveQuestions()">
+                Save</button>
+            <img src="download-round-btn.png" alt="Download" class="cursor-pointer" (keydown.enter)="downloadQuestion()"
+                (click)="downloadQuestion()">
+        </div>
+    </div>
+</div>
+
+<p-dialog *ngIf="deleteConfirmVisible" class="delete-dialog border-1 border-teal-100 " [modal]="true" [(visible)]="deleteConfirmVisible"
+    [style]="{ width: '33rem', height: '13rem'}">
+    <span class="p-text-secondaryfont-semibold line-height-1">Are you sure to Delete this Question?</span>
+    <div class="flex justify-content-center gap-4">
+        <div class="confirm-btn">
+            <p-button label="Yes,Confirm" (onClick)="deleteQuestions()" />
+        </div>
+        <div class="cancel-btn">
+            <p-button label="No,cancel" (onClick)="deleteConfirmVisible = false" />
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog *ngIf="addQuestionVisible" header="Add Question Manually" class="add-question-dialog" [(visible)]="addQuestionVisible" [modal]="true"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '30vw', height:'30vw' }" [draggable]="false"
+    [resizable]="false">
+
+    <div class="flex flex-column gap-2 ">
+        <div class="flex flex-column gap-1">
+            <label for="solutionId" class="qst-description font-semibold">Question Description</label>
+            <input type="text" class="question-Id" placeholder="Enter query ..." pInputText [(ngModel)]="newQuestion"
+                name="solutionId" required />
+        </div>
+
+        <div class="flex flex-column gap-1">
+            <label for="questionType" class="qst-description font-semibold">Category</label>
+            <p-dropdown [options]="questionType" styleClass="custom-dropdown" [(ngModel)]="selectQuestionType"
+                optionLabel="name" [showClear]="true" placeholder="Select question category" name="questionType" required />
+        </div>
+    </div>
+
+    <div class="flex gap-6">
+        <div class="confirm-data">
+            <p-button label="Yes,confirm" (onClick)="AddQuestion()" />
+        </div>
+        <div class="not-confirm">
+            <p-button label="No,cancel" (onClick)="addQuestionVisible = false" />
+        </div>
+    </div>
+</p-dialog>

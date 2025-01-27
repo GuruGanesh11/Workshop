@@ -1,0 +1,241 @@
+<app-header></app-header>
+<div *ngIf="loading" class="loading-container fixed flex align-items-center justify-content-center w-full h-full absolute top-0 left-0">
+    <img src="loading.gif" alt="Loading..." class="loading-gif">
+</div>
+<p-toast />
+<div>
+    <div class="ml-4"><i class="arrow-left text-3xl fa-solid fa-arrow-left"></i></div>
+    <div class="flex gap-3 align-items-center justify-content-end px-8">
+
+        <div class="card flex justify-content-center header">
+            <p-button (onClick)="showDialog()" class="addfeature-btn font-semibold" label="Add Features" />
+            <!-- <p-button (onClick)="showDialog()" label="Show" /> -->
+
+        </div>
+        <div class="add-feature-dialog-header">
+            <p-dialog header=" Add Feature" [(visible)]="visible" [modal]="true"
+                [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw', height:'800px' }"
+                [draggable]="false" [resizable]="false" class="custom-dialog-header">
+
+
+                <div class="flex justify-content-center align-items-center h-full ">
+                    <!-- <div class="flex justify-content-center "> -->
+                    <form #createSolutionForm="ngForm" (ngSubmit)="createSolution(createSolutionForm)"
+                        class="flex flex-column justify-content-between h-full">
+                        <div class="flex justify-content-center align-items-center flex-column gap-2 mb-3">
+                            <!-- Solution ID -->
+                            <div class="flex flex-column">
+                                <label for="solutionId" class="integer-only font-semibold">Feature ID</label>
+                                <input type="text" class="feature-Id" placeholder="SOL-1687" pInputText
+                                    [(ngModel)]="featureId" name="solutionId" required />
+                            </div>
+
+                            <!-- Solution Name -->
+                            <div class="flex flex-column ">
+                                <label for="solutionName" class="integer-only font-semibold">Feature Name</label>
+                                <input type="text" class="feature-Name" placeholder="Type feature name" pInputText
+                                    [(ngModel)]="featureName" name="solutionName" required />
+                            </div>
+
+                            <!-- Solution Type -->
+                            <div class="flex flex-column ">
+                                <label for="solutionType" class="integer-only font-semibold">Description</label>
+                                <!-- <p-dropdown [options]="solutionType" [(ngModel)]="selectSolutionType" optionLabel="name"
+                                [showClear]="true" placeholder="Select solution type" name="solutionType" required /> -->
+                                <textarea rows="4" cols="20" pInputTextarea class="" [(ngModel)]="selectDescription"
+                                    placeholder="Type Description"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- <div class="flex justify-content-center flex-column gap-1"> -->
+                        <div class="wrapper flex justify-content-center mb-3" (click)="triggerFileInput()">
+                            <form action="#">
+                                <input #fileInput type="file" accept=".jpg,.jpeg,.png,.pdf"
+                                    (change)="onFileBrowse($event)" class="file-input" type="file" name="file" hidden />
+                                <svg width="30" height="30" viewBox="0 0 58 58" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M38.6667 38.6666L29 29M29 29L19.3333 38.6666M29 29V50.75M49.2758 44.4425C51.6329 43.1575 53.4949 41.1241 54.568 38.6633C55.6411 36.2025 55.8642 33.4545 55.202 30.8528C54.5398 28.2512 53.0301 25.9441 50.9111 24.2958C48.7921 22.6475 46.1846 21.7518 43.5 21.75H40.455C39.7235 18.9206 38.3601 16.294 36.4674 14.0674C34.5746 11.8408 32.2017 10.0723 29.5271 8.89478C26.8524 7.71728 23.9457 7.16143 21.0253 7.26903C18.1049 7.37663 15.2469 8.14487 12.6662 9.51601C10.0854 10.8871 7.84911 12.8255 6.12533 15.1853C4.40155 17.5451 3.23516 20.265 2.71386 23.1405C2.19256 26.016 2.32992 28.9723 3.11559 31.787C3.90127 34.6018 5.31483 37.2018 7.25 39.3916"
+                                        stroke="#1E1E1E" stroke-width="4" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                <button class="choose-file-btn cursor-pointer">Browse File</button>
+                                <div class="font-medium choose-file">Choose a file or drag & drop it here</div>
+                                <div class="file-format font-medium">JPEG, PNG, PDG, and MP4 formats, up to 5MB</div>
+                            </form>
+                            <section class="progress-area"></section>
+                            <section class="uploaded-area"></section>
+                        </div>
+
+                        <div class="flex justify-content-center align-items-center flex-column gap-1">
+                            <div class="flex flex-column justify-content-center align-items-center "
+                                *ngFor="let media of uploadedMedia; let i = index">
+                                <div class="document-file p-3 flex justify-content-between align-items-center">
+                                    <div class="flex flex-column">
+                                        <div class="document-name font-bold">{{ media.FileName }}</div>
+                                        <div class="uploading-file font-medium" *ngIf="media.FileProgress !== 100">{{
+                                            media.FileProgress }}% Uploading . {{
+                                            media.FileSize }}</div>
+                                        <div class="file-upload-states" *ngIf="media.FileProgress === 100">Upload
+                                            complete</div>
+                                    </div>
+                                    <div class="flex align-items-center gap-2">
+                                        <div class="progress" *ngIf="media.FileProgress !== 100">
+                                            <div>
+                                                <div class="first-progress">
+                                                    <div [ngStyle]="{ 'width.%': media.FileProgress }"
+                                                        class="second-progress">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="media.FileProgress === 100"
+                                            class="border-1 states-icon flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-check text-sm"></i></div>
+                                        <i (click)="removeImage(i)"
+                                            class="fa-solid fa-xmark cursor-pointer close-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- </div> -->
+                        <!-- </div> -->
+                        <!-- <div class="flex justify-content-between align-items-center">
+                <button type="submit" class="submit-btn relevent-btn w-full">No, cancel</button>
+                <button type="submit" class="submit-btn irrelevant-btn w-full">Yes, confirm</button>
+            </div> -->
+
+                        <div>
+                        </div>
+                        <div class="flex justify-content-center align-items-center gap-3 pt-3 pb-3 ">
+                            <div class="cancel">
+                                <p-button label="No,cancel" (onClick)="visible = true" />
+                            </div>
+                            <div class="confirm">
+                                <p-button label="Yes,Confirm" type="submit" />
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+
+            </p-dialog>
+        </div>
+
+        <i class="fa-solid fa-pen edit-delete-icon cursor-pointer text-lg"></i>
+        <i class="fa-regular fa-trash-can edit-delete-icon cursor-pointer text-lg"></i>
+    </div>
+    <div class="flex flex-row gap-2">
+    <div class="head text-3xl line-height-3 font-semibold ml-8">EPICs</div>
+    <p-checkbox  [binary]="true" inputId="binary" />
+    <div class="ml-3 mt-3 ">Select All</div>
+    </div>
+    <div class="card justify-content-center">
+        <p-carousel [value]="products" [numVisible]="4" [numScroll]="1" [showNavigators]="true"
+            [responsiveOptions]="responsiveOptions">
+            <ng-template let-product pTemplate="item">
+                <div class="feature-list border-1 border-round m-2 p-3 flex flex-column"
+                    [ngClass]="{ 'checked-bg': product.checked, 'unChecked-bg': !product.checked }">
+                    <div class="mb-3">
+                        <div class="relative mx-auto">
+                            <div class="card flex align-items-center justify-content-end">
+                                <p-checkbox [(ngModel)]="product.checked" [binary]="true" inputId="binary"
+                                    (click)="productButtonDisabled(product?.id)" />
+                            </div>
+                            <div class="txt-color mb-3 text-lg line-height-3 font-bold">
+                                {{ product.id }}
+                            </div>
+                            <div class="flex justify-content-center">
+                                <svg width="215" height="202" viewBox="0 0 215 202" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M25.6345 199.336L189.551 199.28C202.484 199.276 212.965 189.497 212.96 177.439L212.909 24.6058C212.905 12.5475 202.417 2.77598 189.485 2.78036L25.568 2.83583C12.6354 2.8402 2.15468 12.6189 2.15876 24.6771L2.21047 177.51C2.21455 189.569 12.7019 199.34 25.6345 199.336ZM25.6345 199.336L154.386 79.2089L212.946 133.772M84.13 62.8577C84.1331 71.9013 76.2726 79.2353 66.5731 79.2386C56.8736 79.2419 49.0081 71.9132 49.005 62.8696C49.002 53.8259 56.8625 46.4919 66.562 46.4886C76.2615 46.4853 84.127 53.814 84.13 62.8577Z"
+                                        stroke="#1E1E1E" stroke-width="4" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="txt-color mb-3 text-lg line-height-3 font-bold  ">
+                        {{ product.name }}
+                    </div>
+                    <div class=" card flex-grow-1">
+                        <textarea class="textarea p-3 w-full h-full text-justify overflow-y-auto" rows="5" cols="10" pInputTextarea
+                            [autoResize]="true" [(ngModel)]="product.description">
+                        </textarea>
+                    </div>
+                </div>
+            </ng-template>
+        </p-carousel>
+    </div>
+    <div class="card flex flex-row justify-content-between align-items-center pt-5 pb-2 px-8 footer">
+        <div class="flex flex-row flex-wrap align-items-end gap-6">
+            <p-button class="font-semibold border-round-md" [disabled]="buttonDisabled"
+                [ngClass]="{ 'btn-disabled': buttonDisabled, 'btn-not-disabled': !buttonDisabled }"
+                (onClick)="showGenerate('success')">Generate User Story <br> and Use cases</p-button>
+
+                <p-button class="font-semibold border-round-md" [disabled]="buttonDisabled"
+                [ngClass]="{ 'btn-disabled': buttonDisabled, 'btn-not-disabled': !buttonDisabled }">Generate Design<br>Canvas</p-button>
+            <!-- <div class="flex flex-column">
+            <label for="solutionType" class="integer-only font-semibold">Solution Framework</label>
+            <p-dropdown [options]="solutionType" [(ngModel)]="selectSolutionType" optionLabel="name"
+                [showClear]="false" placeholder="Select solution type" name="solutionType" class="" required />
+        </div> -->
+        </div>
+        <!-- <div class="select-tool-button">
+            <p-button class="font-semibold">Select Tool</p-button>
+        </div> -->
+        <div class="Export-btn">
+            <p-toast />
+            <p-confirmPopup #confirmPopupRef>
+                <ng-template pTemplate="headless" let-message let-test>
+                    <div class="flex flex-column align-items-center w-full gap-3 surface-border p-3">
+                        <!-- Image with clickable links -->
+                        <div class="flex flex-row align-items-center gap-3">
+                          <!-- XLS Image and Label -->
+                          <div class="flex flex-column align-items-center">
+                            <img src="xls-icon.png" alt="Download XLS" class="w-6 h-auto" />
+                            <a  class="text-sm">.XLS</a>
+                          </div>
+                          <!-- PDF Image and Label -->
+                          <div class="flex flex-column align-items-center">
+                            <img src="pdf-icon.png" alt="Download PDF" class="w-6 h-auto" />
+                            <a  class="text-sm">.PDF</a>
+                          </div>
+                          <!-- DOC Image and Label -->
+                          <div class="flex flex-column align-items-center">
+                            <img src="/doc-icon.png" alt="Download DOC" class="w-6 h-auto" />
+                            <a  class="text-sm">.DOC</a>
+                          </div>
+                        </div>
+                      </div>
+                </ng-template>
+            </p-confirmPopup>
+        <p-button class="font-semibold border-round-md h-full" (onClick)="confirm($event)">Export</p-button>
+    </div>
+
+    </div>
+    <div class="flex justify-content-end gap-2">
+    <img src="validate_input.svg" alt="Uploaded" class="cursor-pointer" />
+    <div class="export-text text-sm mt-1">Selected Epics are exported in the chosen format</div>
+    </div>
+</div>
+<p-dialog header="" [(visible)]="generateVisible" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+    [style]="{ width: '25vw', height:'8vw' }" [draggable]="false" [resizable]="false">
+    <div class="flex flex-wrap gap-3 pl-4">
+        <div>
+            <i class="tick fa-solid tick-icon flex justify-content-center align-items-center"
+                [ngClass]="{ 'fa-check , tick-icon-color': successIcon, 'fa-xmark , error-icon-color': !successIcon }"></i>
+        </div>
+        <div class="flex flex-column gap-2">
+            <div class="font-semibold"
+                [ngClass]="{ 'success-generated': successIcon, 'error-generated': !successIcon }">{{responseHeader}}
+            </div>
+            <div class="sub-success">{{responseBody}}</div>
+        </div>
+    </div>
+</p-dialog>

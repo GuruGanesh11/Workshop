@@ -1,0 +1,528 @@
+<app-header></app-header>
+<div>
+    <div class="ml-4"><i class="arrowleft text-3xl fa-solid fa-arrow-left"></i></div>
+    <div class="top-icon flex gap-3 align-items-center justify-content-end ">
+
+        <div class="card flex justify-content-center header">
+            <p-button (onClick)="showDialog()" class="addfeature-btn font-semibold" label="Add Features" />
+        </div>
+        <div class="add-feature-dialog-header">
+            <p-dialog header=" Add Feature" [(visible)]="visible" [modal]="true"
+                [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw', height:'800px' }"
+                [draggable]="false" [resizable]="false" class="custom-dialog-header">
+                <div class="flex justify-content-center align-items-center h-full ">
+                    <form #createSolutionForm="ngForm" (ngSubmit)="createSolution(createSolutionForm)"
+                        class="flex flex-column justify-content-between h-full">
+                        <div class="flex justify-content-center align-items-center flex-column gap-2 mb-3">
+                            <div class="flex flex-column">
+                                <label for="solutionId" class="integeronly font-semibold">Feature ID</label>
+                                <input type="text" class="feature-Id" placeholder="SOL-1687" pInputText
+                                    [(ngModel)]="featureId" name="solutionId" required />
+                            </div>
+
+                            <div class="flex flex-column ">
+                                <label for="solutionName" class="integeronly font-semibold">Feature Name</label>
+                                <input type="text" class="feature-Name" placeholder="Type feature name" pInputText
+                                    [(ngModel)]="featureName" name="solutionName" required />
+                            </div>
+                            <div class="flex flex-column ">
+                                <label for="solutionType" class="integeronly font-semibold">Description</label>
+                                <textarea rows="4" cols="20" pInputTextarea class="" [(ngModel)]="selectDescription"
+                                    placeholder="Type Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="wrapper flex justify-content-center mb-3" (keydown)="triggerFileInput()"
+                            (click)="triggerFileInput()">
+                            <form action="#">
+                                <input #fileInput type="file" accept=".jpg,.jpeg,.png,.pdf"
+                                    (change)="onFileBrowse($event)" class="file-input" type="file" name="file" hidden />
+                                <svg width="30" height="30" viewBox="0 0 58 58" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M38.6667 38.6666L29 29M29 29L19.3333 38.6666M29 29V50.75M49.2758 44.4425C51.6329 43.1575 53.4949 41.1241 54.568 38.6633C55.6411 36.2025 55.8642 33.4545 55.202 30.8528C54.5398 28.2512 53.0301 25.9441 50.9111 24.2958C48.7921 22.6475 46.1846 21.7518 43.5 21.75H40.455C39.7235 18.9206 38.3601 16.294 36.4674 14.0674C34.5746 11.8408 32.2017 10.0723 29.5271 8.89478C26.8524 7.71728 23.9457 7.16143 21.0253 7.26903C18.1049 7.37663 15.2469 8.14487 12.6662 9.51601C10.0854 10.8871 7.84911 12.8255 6.12533 15.1853C4.40155 17.5451 3.23516 20.265 2.71386 23.1405C2.19256 26.016 2.32992 28.9723 3.11559 31.787C3.90127 34.6018 5.31483 37.2018 7.25 39.3916"
+                                        stroke="#1E1E1E" stroke-width="4" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                <button class="choose-file-btn cursor-pointer">Browse File</button>
+                                <div class="font-medium choose-file">Choose a file or drag & drop it here</div>
+                                <div class="file-format font-medium">JPEG, PNG, PDG, and MP4 formats, up to 5MB</div>
+                            </form>
+                            <section class="progress-area"></section>
+                            <section class="uploaded-area"></section>
+                        </div>
+
+                        <div class="flex justify-content-center align-items-center flex-column gap-1">
+                            <div class="flex flex-column justify-content-center align-items-center "
+                                *ngFor="let media of uploadedMedia; let i = index">
+                                <div class="document-file p-3 flex justify-content-between align-items-center">
+                                    <div class="flex flex-column">
+                                        <div class="document-name font-bold">{{ media.FileName }}</div>
+                                        <div class="uploading-file font-medium" *ngIf="media.FileProgress !== 100">{{
+                                            media.FileProgress }}% Uploading . {{
+                                            media.FileSize }}</div>
+                                        <div class="file-upload-states" *ngIf="media.FileProgress === 100">Upload
+                                            complete</div>
+                                    </div>
+                                    <div class="flex align-items-center gap-2">
+                                        <div class="progress" *ngIf="media.FileProgress !== 100">
+                                            <div>
+                                                <div class="first-progress">
+                                                    <div [ngStyle]="{ 'width.%': media.FileProgress }"
+                                                        class="second-progress">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="media.FileProgress === 100"
+                                            class="border-1 states-icon flex align-items-center justify-content-center">
+                                            <i class="fa-solid fa-check text-sm"></i></div>
+                                        <i (keydown.enter)="removeImage(i)" (click)="removeImage(i)"
+                                            class="fa-solid fa-xmark cursor-pointer close-icon"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                        </div>
+                        <div class="flex justify-content-center align-items-center gap-3 pt-3 pb-3 ">
+                            <div class="cancel">
+                                <p-button label="No,cancel" (onClick)="visible = true" />
+                            </div>
+                            <div class="confirm">
+                                <p-button label="Yes,Confirm" type="submit" />
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </p-dialog>
+        </div>
+
+        <i class="fa-solid fa-pen edit-delete-icon cursor-pointer text-lg"></i>
+        <i class="fa-regular fa-trash-can edit-delete-icon cursor-pointer text-lg"></i>
+    </div>
+    <div class="head text-3xl line-height-3  font-semibold">Features</div>
+    <div class="card" *ngFor="let product of products">
+
+        <div class=" justify-content-center ml-6 p-3">
+            <div class="flex flex-wrap ">
+                <div class="feature-id border-1 border-round p-3"
+                    [ngClass]="{ 'checked-bg': product.checked, 'unChecked-bg': !product.checked }">
+
+                    <div class="mb-1">
+                        <div class="relative mx-auto">
+                            <div class="textcolor  font-bold">
+                                {{ product.id }}
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="textcolor  font-bold">
+                        {{ product.name }}
+                    </div>
+                    <div class=" card">
+                        <textarea class="textarea p-1  text-justify" rows="5" cols="5" pInputTextarea
+                            [autoResize]="true" [(ngModel)]="product.description">
+                    </textarea>
+                    </div>
+                    <div class="textcolor mb-1 font-bold">
+                        {{ product.epics }}
+                    </div>
+
+                    <div class="flex flex-row gap-4">
+                        <div class="epics-details border-1 p-1"
+                            [ngClass]="{ 'checked-bg': product.checked, 'unChecked-bg': !product.checked }">
+
+
+                            <div class=" flex justify-content-between  ">
+                                <div class="textdesign  font-bold">
+                                    {{ product.epicSid1 }}
+                                </div>
+                                <p-checkbox [(ngModel)]="product.checked" [binary]="true" inputId="binary"
+                                    (keydown)="productButtonDisabled(product.id)"
+                                    (click)="productButtonDisabled(product.id)" />
+                            </div>
+
+                            <div class="textdesign  font-bold">
+                                {{ product.loginScreen }}
+                            </div>
+                            <div class=" card">
+                                <textarea class=" p-1  text-justify custom-textarea-2" rows="5" cols="5" pInputTextarea
+                                    [autoResize]="true" [(ngModel)]="product.epicsDetail1">
+                    </textarea>
+                            </div>
+                        </div>
+
+                        <div class="epics-details border-1 p-1 "
+                            [ngClass]="{ 'checked-bg': product.checked, 'unChecked-bg': !product.checked }">
+
+
+                            <div class=" flex justify-content-between  ">
+                                <div class="textdesign  font-bold">
+                                    {{ product.epicSid2 }}
+                                </div>
+                                <p-checkbox [(ngModel)]="product.checked" [binary]="true" inputId="binary"
+                                    (keydown)="productButtonDisabled(product.id)"
+                                    (click)="productButtonDisabled(product.id)" />
+                            </div>
+
+                            <div class="textdesign  font-bold">
+                                {{ product.homepage }}
+                            </div>
+                            <div class=" card">
+                                <textarea class=" p-1  text-justify custom-textarea-2" rows="5" cols="5" pInputTextarea
+                                    [autoResize]="true" [(ngModel)]="product.homePagePic">
+                    </textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- <div class="credit-scoring border-1  p-3"
+                    [ngClass]="{ 'checked-bg': product.checked, 'unChecked-bg': !product.checked }">
+                    <div class=" flex justify-content-between  ">
+                        <div class="textcolor mb-1 font-bold">
+                            {{ product.id }}
+                        </div>
+                    </div>
+                    <div class="textcolor  font-bold">
+                        {{ product.integration }}
+                    </div>
+                    <div class=" card">
+                        <textarea class=" p-1  text-justify custom-textarea-3" rows="5" cols="5" pInputTextarea
+                            [autoResize]="true" [(ngModel)]="product.integrationDetail">
+                    </textarea>
+                    </div>
+                </div> -->
+
+            </div>
+
+            <div class="summary-box flex flex-wrap border-1 border-round  "
+                [ngClass]="{ 'checked-bg': product.checked, 'unChecked-bg': !product.checked }">
+                <div>
+                    <div class="textcolor m-3 font-bold">
+                        {{ product.epics }}
+                    </div>
+
+                    <div class="summary-border m-3 p-3 overflow-y-auto">
+                        <div class="flex flex-row gap-4">
+                            <div class="user-story border-1 p-1"
+                                [ngClass]="{ 'checked-bg': product.checked, 'unChecked-bg': !product.checked }">
+
+                                <div class=" flex justify-content-between  ">
+
+                                    <div class="summary-coloum-head  font-bold">
+                                        {{ product.loginScreen }}
+                                    </div>
+                                    <p-checkbox [(ngModel)]="product.checked" [binary]="true" inputId="binary"
+                                        (keydown)="productButtonDisabled(product.id)"
+                                        (click)="productButtonDisabled(product.id)" />
+                                </div>
+
+
+                                <div class=" card">
+                                    <textarea class=" p-1  text-justify custom-textarea-4" rows="5" cols="5"
+                                        pInputTextarea [autoResize]="true" [(ngModel)]="product.epicsDetail1">
+                    </textarea>
+                                </div>
+                                <!--  -->
+                                <div class="summary-coloum-head  font-bold">
+                                    {{ product.loginScreen }}
+                                </div>
+                                <div class=" card">
+                                    <textarea class=" p-1  text-justify custom-textarea-5" rows="5" cols="5"
+                                        pInputTextarea [autoResize]="true" [(ngModel)]="product.epicsDetail1">
+                    </textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="user-story border-1 p-1 "
+                                [ngClass]="{ 'checked-bg': product.checked, 'unChecked-bg': !product.checked }">
+
+
+                                <div class=" flex justify-content-between  ">
+                                    <div class="summary-coloum-head  font-bold">
+                                        {{ product.homepage }}
+                                    </div>
+                                    <p-checkbox [(ngModel)]="product.checked" [binary]="true" inputId="binary"
+                                        (keydown)="productButtonDisabled(product.id)"
+                                        (click)="productButtonDisabled(product.id)" />
+                                </div>
+
+
+                                <div class=" card">
+                                    <textarea class=" p-1  text-justify custom-textarea-4" rows="5" cols="5"
+                                        pInputTextarea [autoResize]="true" [(ngModel)]="product.homePagePic">
+                    </textarea>
+                                </div>
+                                <!--  -->
+                                <div class="summary-coloum-head  font-bold">
+                                    {{ product.homepage }}
+                                </div>
+                                <div class=" card">
+                                    <textarea class=" p-1  text-justify custom-textarea-5" rows="5" cols="5"
+                                        pInputTextarea [autoResize]="true" [(ngModel)]="product.homePagePic">
+                    </textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  -->
+                <div>
+                    <div class="textcolor m-3 font-bold">
+                        {{ product.epics }}
+                    </div>
+
+                    <div class="summary-border m-3 p-3 overflow-y-auto">
+                        <div class="flex flex-row gap-4">
+                            <div class="user-story border-1 p-1"
+                                [ngClass]="{ 'checked-bg': product.checked, 'unChecked-bg': !product.checked }">
+
+                                <div class=" flex justify-content-between  ">
+                                    <div class="summary-coloum-head  font-bold">
+                                        {{ product.loginScreen }}
+                                    </div>
+                                    <p-checkbox [(ngModel)]="product.checked" [binary]="true" inputId="binary"
+                                        (keydown)="productButtonDisabled(product.id)"
+                                        (click)="productButtonDisabled(product.id)" />
+                                </div>
+
+
+                                <div class=" card">
+                                    <textarea class=" p-1  text-justify custom-textarea-4" rows="5" cols="5"
+                                        pInputTextarea [autoResize]="true" [(ngModel)]="product.epicsDetail1">
+                </textarea>
+                                </div>
+                                <!--  -->
+                                <div class="summary-coloum-head  font-bold">
+                                    {{ product.loginScreen }}
+                                </div>
+                                <div class=" card">
+                                    <textarea class=" p-1  text-justify custom-textarea-5" rows="5" cols="5"
+                                        pInputTextarea [autoResize]="true" [(ngModel)]="product.epicsDetail1">
+                </textarea>
+                                </div>
+
+                            </div>
+
+                            <div class="user-story border-1 p-1 "
+                                [ngClass]="{ 'checked-bg': product.checked, 'unChecked-bg': !product.checked }">
+
+
+                                <div class=" flex justify-content-between  ">
+                                    <div class="summary-coloum-head  font-bold">
+                                        {{ product.homepage }}
+                                    </div>
+                                    <p-checkbox [(ngModel)]="product.checked" [binary]="true" inputId="binary"
+                                        (keydown)="productButtonDisabled(product.id)"
+                                        (click)="productButtonDisabled(product.id)" />
+                                </div>
+
+
+                                <div class=" card">
+                                    <textarea class=" p-1  text-justify custom-textarea-4" rows="5" cols="5"
+                                        pInputTextarea [autoResize]="true" [(ngModel)]="product.homePagePic">
+                </textarea>
+                                </div>
+                                <!--  -->
+                                <div class="summary-coloum-head  font-bold">
+                                    {{ product.homepage }}
+                                </div>
+                                <div class=" card">
+                                    <textarea class=" p-1  text-justify custom-textarea-5" rows="5" cols="5"
+                                        pInputTextarea [autoResize]="true" [(ngModel)]="product.homePagePic">
+                </textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="card flex flex-row flex-wrap justify-content-end align-items-end py-5 px-8 footer">
+        <div class="flex flex-row flex-wrap  align-items-end mr-7 gap-6">
+            <p-button class="font-semibold border-round-md" (onClick)="epicDetails()">Epic Details</p-button>
+            <div class="flex flex-column">
+                <p-dropdown [options]="solutionType" [(ngModel)]="selectSolutionType" optionLabel="name"
+                    [showClear]="false" placeholder="Select Tool" name="solutionType" class="" required />
+            </div>
+            <p-button class="font-semibold border-round-md" [disabled]="buttonDisabled"
+                [ngClass]="{ 'btn-disabled': buttonDisabled, 'btn-nondisabled': !buttonDisabled }"
+                (onClick)="showGenerate('success')">Generate Script</p-button>
+        </div>
+    </div>
+</div>
+<p-dialog header="" [(visible)]="generateVisible" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+    [style]="{ width: '25vw', height:'8vw' }" [draggable]="false" [resizable]="false">
+    <div class="flex flex-wrap gap-3 pl-4">
+        <div>
+            <i class="tick fa-solid tick-icon flex justify-content-center align-items-center"
+                [ngClass]="{ 'fa-check , tick-icon-color': successIcon, 'fa-xmark , error-icon-color': !successIcon }"></i>
+        </div>
+        <div class="flex flex-column gap-2">
+            <div class="font-semibold"
+                [ngClass]="{ 'success-generated': successIcon, 'error-generated': !successIcon }">{{responseHeader}}
+            </div>
+            <div class="sub-success">{{responseBody}}</div>
+        </div>
+    </div>
+</p-dialog>
+
+
+<!-- epic detail dialog box -->
+<p-dialog header="Epic Overview" [(visible)]="epicVisible" [modal]="true"
+    [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: '50vw', height:'100vw' }"
+    [draggable]="false" [resizable]="false">
+
+    <div class="card flex">
+        <p-breadcrumb class="max-w-full" [model]="userItem">
+            <ng-template pTemplate="item" let-item>
+                <ng-container *ngIf="item.route; else elseBlock">
+                    <a (click)="onBreadcrumbClick(item)" class="p-menuitem-link">
+                        <span>{{ item.label }}</span>
+                    </a>
+                </ng-container>
+                <ng-template #elseBlock>
+                    <span (keydown.enter)="onBreadcrumbClick(item)" (click)="onBreadcrumbClick(item)" class="">{{
+                        item.label }}</span>
+                </ng-template>
+            </ng-template>
+        </p-breadcrumb>
+    </div>
+
+    <div *ngIf="selectedComponent === 'Home'">
+        <div>Content for Home</div>
+    </div>
+
+
+    <div *ngIf="selectedComponent === 'Components'" class="p-3">
+
+        <div class="epic-subtitle font-bold pb-2">Epic</div>
+        <div class=" border-1 title-box border-round-xl  flex justify-content-center ">
+            <div class="flex flex-column p-2 gap-1  ">
+                <div class="epic-subtitle text-base font-bold"> Title </div>
+                <div class=" card flex-grow-1">
+                    <textarea class=" p-1  text-justify custom-textarea-6 w-full " rows="5" cols="5" pInputTextarea
+                        [autoResize]="true">
+                    </textarea>
+                </div>
+                <div class="epic-subtitle text-base font-bold"> Description </div>
+                <div class=" card">
+                    <textarea class=" p-1  text-justify custom-textarea-7" rows="5" cols="5" pInputTextarea
+                        [autoResize]="true">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="epic-subtitle font-bold p-2">User Stories</div>
+        <div class="flex flex-column gap-2">
+            <div class=" border-1 w-full userstory-box border-round-xl flex align-items-center pl-3 pt-1 ">
+                <div class="epic-subtitle font-bold pb-2">US-003-login page</div>
+            </div>
+            <div class=" border-1 w-full userstory-box border-round-xl flex align-items-center pl-3 pt-1 ">
+                <div class="epic-subtitle font-bold pb-2">US-002-forget password</div>
+            </div>
+            <div class=" border-1 w-full userstory-box border-round-xl flex align-items-center pl-3 pt-1 ">
+                <div class="epic-subtitle font-bold pb-2">US-005-login in page</div>
+            </div>
+            <div class=" border-1 w-full userstory-box border-round-xl flex align-items-center pl-3 pt-1 ">
+                <div class="epic-subtitle font-bold pb-2">US-006-Home page</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div *ngIf="selectedComponent === 'Form'" class="userSummary p-3">
+        <div class=" border-1 w-full title-box border-round-xl  flex justify-content-center ">
+            <div class="flex flex-column p-2 gap-1 ">
+                <div class="epic-subtitle text-base font-bold"> Online loan application form </div>
+                <div class=" card">
+                    <textarea class=" p-1  text-justify custom-textarea-6" rows="5" cols="5" pInputTextarea
+                        [autoResize]="true">
+                    </textarea>
+                </div>
+                <div class="epic-subtitle text-base font-bold"> Description </div>
+                <div class=" card">
+                    <textarea class=" p-1  text-justify custom-textarea-7" rows="5" cols="5" pInputTextarea
+                        [autoResize]="true">
+                    </textarea>
+                </div>
+                <div class="epic-subtitle text-base font-bold"> Acceptance Criteria </div>
+                <div class=" card">
+                    <textarea class=" p-1  text-justify custom-textarea-7" rows="5" cols="5" pInputTextarea
+                        [autoResize]="true">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="epic-subtitle font-bold p-2">Dependency</div>
+        <div class=" border-1 w-full userstory-box border-round-xl flex align-items-center pl-3 pt-1 ">
+            <div class="epic-subtitle font-bold pb-2">US-003-login page</div>
+        </div>
+        <div class="card  justify-content-center pt-2 ">
+            <p-dropdown [options]="userStories" [(ngModel)]="selectUserStory" optionLabel="name"
+                placeholder="Select User Story" />
+        </div>
+    </div>
+
+    <div *ngIf="selectedComponent === 'InputText'" class="p-3 flex flex-column gap-2 ">
+        <div class=" border-1 w-full titlebox-testcase border-round-xl  flex justify-content-center ">
+            <div class="flex flex-column p-2 gap-1 ">
+                <div class="epic-subtitle text-base font-bold"> Title </div>
+                <div class=" card">
+                    <textarea class=" p-1  text-justify custom-textarea-6" rows="5" cols="5" pInputTextarea
+                        [autoResize]="true">
+                    </textarea>
+                </div>
+                <div class="epic-subtitle text-base font-bold"> Steps </div>
+                <div class=" card">
+                    <textarea class=" p-1  text-justify custom-textarea-7" rows="5" cols="5" pInputTextarea
+                        [autoResize]="true">
+                    </textarea>
+                </div>
+                <div class="epic-subtitle text-base font-bold"> Actions </div>
+                <div class=" card">
+                    <textarea class=" p-1  text-justify custom-textarea-7" rows="5" cols="5" pInputTextarea
+                        [autoResize]="true">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class=" border-1 w-full titlebox-testcase border-round-xl  flex justify-content-center ">
+            <div class="flex flex-column p-2 gap-1 ">
+                <div class="epic-subtitle text-base font-bold"> Functionality </div>
+                <div class=" card">
+                    <textarea class=" p-1  text-justify custom-textarea-6" rows="5" cols="5" pInputTextarea
+                        [autoResize]="true">
+                    </textarea>
+                </div>
+                <div class="epic-subtitle text-base font-bold"> Parameters </div>
+                <div class=" card">
+                    <textarea class=" p-1  text-justify custom-textarea-7" rows="5" cols="5" pInputTextarea
+                        [autoResize]="true">
+                    </textarea>
+                </div>
+                <div class="epic-subtitle text-base font-bold"> Usage instructions </div>
+                <div class=" card">
+                    <textarea class=" p-1  text-justify custom-textarea-7" rows="5" cols="5" pInputTextarea
+                        [autoResize]="true">
+                    </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>

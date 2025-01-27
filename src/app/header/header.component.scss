@@ -1,0 +1,80 @@
+.header {
+    font-size: 28px;
+    line-height: 43px;
+    color: #216B40;
+}
+
+.logo-container-logo {
+    width: 54px;
+    height: 54px;
+}
+.custom-timeline {
+    .event-content {
+      text-align: center;
+      padding: 1rem;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      background: #f4f4f4;
+    }
+  
+    .event-header {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+  
+    .custom-marker {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+    }
+  
+    .green {
+      background-color: #28a745;
+    }
+  
+    .gray {
+      background-color: #6c757d;
+    }
+  }
+
+  ::ng-deep .solution-tracker{
+    .green {
+      background-color: #28a745;
+    }
+    .gray {
+      background-color: #6c757d;
+    }
+    .p-timeline-event-content{
+        color: #216B40;
+        font-size: 11px;
+    }
+
+    .p-timeline-event-opposite{
+      display: none;
+    }
+
+    .p-timeline-event-connector{
+      display: none;
+    }
+
+    .p-timeline-event-connector-completed{
+      width: 80%;
+      height: 2px;
+      background-color: #28a745;
+    }
+
+    .p-timeline-event-connector-active{
+      width: 80%;
+      height: 2px;
+      background-color: #acb0b3;
+    }
+
+    .p-timeline-event-connector-inactive{
+      width: 80%;
+      height: 2px;
+      background-color: #6c757d;
+    }
+  }
+

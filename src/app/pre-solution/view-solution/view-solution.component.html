@@ -1,0 +1,59 @@
+<div>
+    <div class="logo-container flex align-items-end justify-content-end">
+        <img src="logo.svg" alt="Create-solution" class="logo-container-logo" />
+    </div>
+    <div class="integer-only  font-semibold pl-3 mb-4">Solution Details</div>
+    <div class="solution-details-container p-2">
+        <div class="card">
+            <p-table [loading]="tableLoading" [value]="filteredSolutions"   [tableStyle]="{'min-width': '50rem'}"
+                [paginator]="true" [rows]="10"  [totalRecords]="totalRecord" [lazy]="true" (onLazyLoad)="onPage($event)">
+                <ng-template pTemplate="caption">
+                    <div class="table-header flex justify-content-between p-5">
+                        <div class="search-input-container">
+                            <span class="search p-input-icon-left relative">
+                                <i class="search-icon fa-solid absolute fa-magnifying-glass"></i>
+                                <input pInputText type="text" class="search-input w-full pl-5 " placeholder="Search..."
+                                    [(ngModel)]="searchTerm" (input)="filterTable()" />
+                            </span>
+                        </div>
+                        <p-menu #menu [model]="items" [popup]="true" appendTo="body"></p-menu>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr class="custom-header-style">
+                        <th scope="col">Solution ID</th>
+                        <th scope="col">Solution Name</th>
+                        <th scope="col">Stage</th>
+                        <th scope="col">Created by</th>
+                        <th scope="col">Last modified by</th>
+                        <th scope="col">Modification Date</th>
+                        <th scope="col">% of Completion</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-row>
+                    <tr>
+                        <td class="">{{ row.solution_id }}</td>
+                        <td class="p-button-text custom-hover" tabindex="0" (click)="openSolution(row)" (keydown)="onKeyPress($event, row)">{{ row.solution_name }}</td>
+                        <td> <span class="stage-field"> {{ " Pre Solution " }}</span></td>
+                        <td>{{ row.created_by }}</td>
+                        <td>{{ row.created_by }}</td>
+                        <td>{{ row.updated_at | date : 'yyyy-MM-dd' }}</td>
+                        <td>
+                            <div class="flex justify-content-center align-items-center">
+                                <div class="border-circle flex justify-content-center align-items-center"> 10%</div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td [colSpan]="7">
+                            <h3 class="p-4 text-center">No Solution Found!</h3>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            
+        </div>
+    </div>
+</div>

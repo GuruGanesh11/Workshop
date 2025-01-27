@@ -1,0 +1,205 @@
+.view-feature{
+  margin: 15px 9px 0px 0px;
+}
+.doc-name{
+  color: #006EFD;
+}
+  ::ng-deep {
+    .p-dialog .p-dialog-header {
+      padding: 0px !important;
+    }
+    .p-dialog .p-dialog-content {
+      padding: 0px !important;
+    }  
+    .p-dialog{
+      border: 1px solid #8AEFAF; 
+      border-radius: 8px;
+    }
+  .p-dialog .p-dialog-header-icons {
+      display: flex;
+      align-items: center;
+      background: #E5E5E5;
+      border-radius: 20px;
+      color: #4F4F4F;
+      margin: 17px 17px 0px 0px;
+
+  }
+  .p-button{
+      border: none;
+  }
+  .cancel-btn{
+      .p-button{
+          background-color: #E5E5E5;
+          padding: 16px 50px;
+          color:  #7F8580;
+          box-shadow: 0px 4px 4px 0px #00000040;
+          border: 1px solid #4F4F4F;
+      }
+  }
+  .confirm-btn{
+      .p-button{
+          background-color: #FF0000;
+          padding: 16px 50px;
+          color:  #C4E7CC;
+          box-shadow: 0px 4px 4px 0px #00000040;
+      }
+  }
+
+    .p-inputtextarea {
+      width: 285px;
+      height: 83px;
+      border: 1px solid #8AEFAF;
+      box-shadow: 0px 4px 4px 0px #00000040;
+      border-radius: 7px;
+      padding: 10px;
+      font-size: 9px;
+      line-height: 21px;
+      font-weight: 600;
+      color: #6B7688;
+  }  
+  .cancel{
+    .p-button{
+      width: 144px;
+      height: 39px;
+      font-size: 12px;
+        background-color: #16A34A;
+        border: 1px solid #B2AFAF;
+        color:  #C4E7CC;
+        box-shadow: 0px 4px 4px 0px #00000040;
+    }
+  }
+  .confirm{
+    .p-button{ 
+      width: 144px;
+      height: 39px;
+      font-size: 12px;
+        background-color: #E5E5E5;
+        border: 1px solid #B2AFAF;
+        color:  #B2AFAF;
+        box-shadow: 0px 4px 4px 0px #00000040;
+    }
+  }
+  }  
+  .arrow-left {
+    color: #16A34A;
+    font-size: 20px;
+  }
+
+  .view-header{
+    color: #216B40;
+  }
+  .textarea {
+    box-shadow: 0px 4px 4px 0px #00000040;
+  }
+  .integer-only {
+    font-size: 10px;
+    line-height: 14px;
+    color: #4C986E;
+  }
+  .feature-Id {
+    width: 285px;
+    height: 36px;
+    background-color: #F7F7F7;
+    color: #ACAFBD;
+    border: 1px solid #8AEFAF;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border-radius: 7px;
+    padding: 16px;
+    font-size: 9px;
+    line-height: 25px;
+  }
+  .feature-Name{
+    width: 285px;
+    height: 36px;
+    background-color: #FFFFFF;
+    border: 1px solid #8AEFAF;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border-radius: 7px;
+    padding: 16px;
+    font-size: 9px;
+    line-height: 25px;
+  }
+  .wrapper form {
+    width: 274px;
+    height:142px;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 40px;
+    gap: 8px;
+    border: 2px dashed #4C986E;
+  }
+  .choose-file {
+    font-size: 9px;
+    line-height: 12px;
+    color: #292D32;
+  }
+  .file-format {
+    font-size: 9px;
+    line-height: 12px;
+    color: #A9ACB4;
+  }
+  .choose-file-btn {
+    width: 74px;
+    height: 23px;
+    color: #FFFFFF;
+    background-color: #16A34A;
+    border: 0px;
+    border-radius: 24px;
+    font-size: 8px;
+    line-height: 15px;
+  }
+  .document-file {
+    width: 273px;
+    height: 48px;
+    border: 1px solid #4C986E;
+    border-radius: 12px;
+  }
+  .progress {
+    width: 70px;
+    height: 8px;
+  }
+  .document-name {
+    font-size: 9px;
+    line-height: 12px;
+    color: #222222;
+  }
+  .uploading-file {
+    font-size: 9px;
+    line-height: 12px;
+    color: #4C986E;
+  }
+  .file-upload-states {
+    font-size: 10px;
+    line-height: 13px;
+    color: #4C986E;
+  }
+  .states-icon {
+    width: 24px;
+    height: 25px;
+    border-radius: 24px;
+    background-color: #16A34A;
+  
+    .fa-brands:before,
+    .fa-regular:before,
+    .fa-solid:before,
+    .fa:before,
+    .fab:before,
+    .far:before,
+    .fas:before {
+      width: 15px;
+      height: 15px;
+        font-size: 15px;
+        color: #fff;
+    }
+  }
+.p-text-secondary {
+    color:#54595E;  
+  }
+  .confirm-pop{
+    margin : 0px 40px 0px 40px;
+  }
+
+  

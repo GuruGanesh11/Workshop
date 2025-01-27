@@ -1,0 +1,13 @@
+<div *ngIf="loading" class="loading-container flex align-items-center justify-content-center w-full h-full absolute top-0 left-0">
+    <img src="loading.gif" alt="Loading..." class="loading-gif">
+</div>
+
+<p-toast></p-toast>
+<div *ngIf="!loading" class="main-app-container">
+    <!-- <app-sidenav></app-sidenav> -->
+     <app-left-navbar></app-left-navbar>
+
+    <section class="home-section">
+        <router-outlet />
+    </section>
+</div>

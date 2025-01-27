@@ -1,0 +1,50 @@
+<div class="flex">
+    <p-timeline class="solution-tracker mt-4" [value]="events" layout="horizontal">
+        <ng-template pTemplate="marker" let-event>
+            <span class="border-circle shadow-1 text-center p-2"
+                [ngClass]="event.completed === 'done' ?  'green' : event.completed === 'progress'? 'green' : 'gray'">
+                <i *ngIf="event.completed === 'done'; else notDone" class="fa fa-check text-white"></i>
+                <ng-template #notDone>
+                    <i *ngIf="event.completed === 'progress'; else notCompleted" i
+                        class="fa fa-circle green-text"></i>
+                </ng-template>
+                <ng-template #notCompleted>
+                    <i *ngIf="event.completed === 'pending'; else notCompleted" i
+                        class="fa fa-circle text-white"></i>
+                </ng-template>
+            </span>
+            <div
+                [ngClass]="event.completed == 'done' ? 'p-timeline-event-connector-completed' : event.completed == 'progress' ?  'p-timeline-event-connector-active':  'p-timeline-event-connector-inactive' ">
+            </div>
+        </ng-template>
+        <ng-template pTemplate="content" let-event>
+            <span [ngClass]="event.completed === 'done' || event.completed === 'progress' ?  'green-text' : 'gray-text'">
+                {{ event.title}}
+            </span>     
+        </ng-template>
+    </p-timeline>
+    <p-timeline class="solution-tracker-vertical" [value]="eventsVertical" layout="vertical">
+        <ng-template pTemplate="marker" let-event>
+            <span class="border-circle shadow-1 text-center p-2"
+                [ngClass]="event.completed === 'done' ?  'green' : event.completed === 'progress'? 'green' : 'gray'">
+                <i *ngIf="event.completed === 'done'; else notDone" class="fa fa-check text-white"></i>
+                <ng-template #notDone>
+                    <i *ngIf="event.completed === 'progress'; else notCompleted" i
+                        class="fa fa-circle green-text"></i>
+                </ng-template>
+                <ng-template #notCompleted>
+                    <i *ngIf="event.completed === 'pending'; else notCompleted" i
+                        class="fa fa-circle text-white"></i>
+                </ng-template>
+            </span>
+            <div
+                [ngClass]="event.completed == 'done' ? 'p-timeline-event-connector-completed' : event.completed == 'progress' ?  'p-timeline-event-connector-active':  'p-timeline-event-connector-inactive' ">
+            </div>
+        </ng-template>
+        <ng-template pTemplate="content" let-event>
+            <span [ngClass]="event.completed === 'done' || event.completed === 'progress' ?  'green-text' : 'gray-text'">
+                {{ event.title}}
+            </span>
+        </ng-template>
+    </p-timeline>
+</div>

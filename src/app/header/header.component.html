@@ -1,0 +1,9 @@
+<div class="flex justify-content-between align-items-center mb-4 m-3">
+    <div class="header font-semibold">{{this.solutionData.solution_id}} - {{this.solutionData.solution_name}}</div>
+    <div class="flex justify-content-end align-items-center gap-8">
+        <app-stepper [stepperData]="stepperEvents"></app-stepper>
+        <div class="logo-container">
+            <img src="logo.svg" alt="Create-solution" class="logo-container-logo" />
+        </div>
+    </div>
+</div>

@@ -1,0 +1,20 @@
+.home-section {
+    position: relative;
+    background: #ffffff;
+    min-height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+  }
+
+.main-app-container:has(.sidebar) .home-section {
+    width: calc(100% - 78px);
+    left: 78px;
+  }
+
+
+.main-app-container:has(.sidebar.open) .home-section{
+    left: 167px;
+    width: calc(100% - 167px);
+  }

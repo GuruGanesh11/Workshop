@@ -1,0 +1,182 @@
+<app-header></app-header>
+<div *ngIf="loading" class="loading-container fixed flex align-items-center justify-content-center w-full h-full absolute top-0 left-0">
+    <img src="loading.gif" alt="Loading..." class="loading-gif">
+</div>
+<p-toast />
+<div class="digital-loan-container">
+    <div class="flex">
+        <div class="input-container border-round-lg w-4 flex relative flex-column gap-4 p-3">
+            <div class="flex flex-column gap-2 ml-2">
+                <div class="font-semibold input-context-text">Upload Transcripts of Design Workshop</div>
+                <div class="flex flex-column gap-4 h-full">
+                    <div *ngFor="let sheet of userInputSheets; let i = index"
+                        class="flex flex-column">
+                        <div class="flex flex-row align-items-center justify-content-between">
+                            <div>
+                                {{ sheet.name }}
+                                @if(sheet.required){<span class="text-red-500" >*</span>} 
+                                @if(!sheet.required){
+                                    <span> {{' (Recommended)'}} </span>
+                                }
+                            </div>
+                            <div class="flex align-items-center gap-3">
+                                <div *ngIf="sheet.media.length < 1" class="file-upload mr-6">
+                                    <label for="fileInput{{ i }}" class="choose-file-btn cursor-pointer border-round-xl text-xs py-1 px-4">
+                                        <img src="upload.svg" alt="Uploaded" class="cursor-pointer" />
+                                        <span class="upload-text ml-2">Upload</span>
+                                    </label>
+                                    <input id="fileInput{{ i }}" #fileInput type="file" accept=".jpg,.jpeg,.png,.pdf"
+                                        (change)="onFileBrowse($event, i)" multiple hidden />
+                                </div>
+                                <div *ngIf="sheet.media.length > 0" class="flex flex-row gap-2">                      
+                                    <div class="filename">{{ getFileName(sheet.media[0]) || '' }}</div>
+                                    <img src="tick_icon.svg" alt="Uploaded" class="cursor-pointer" />
+                                    <i class="fa-regular fa-trash-can edit-delete-icon cursor-pointer text-lg"
+                                        (keydown.enter)="deleteFile(sheet.id, i)" (click)="deleteFile(sheet.id, i)"></i>
+                                </div>
+                            </div>
+                        </div>
+                        @if(sheet.deleted){
+                            <div class="text-sm text-red-500 mt-2" >
+                                Attachment deleted Please re-upload
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+            <form class="flex flex-column ml-2 pt-5" [formGroup]="additionalContextForm" (ngSubmit)="additionalContextUpdate()">
+                <div class="flex flex-column gap-2">
+                    <div class="flex flex-column gap-2">
+                        <div class="industry-context-text font-semibold flex flex-row align-items-center pt-2">
+                            Any additional details you feel are important(Optional) (Max 1000 words)
+                            <img src="info.png" class="info-icon mb-4" alt=""
+                            pTooltip="Any additional details you feel are important"
+                            [tooltipOptions]="tooltipOptions" />
+                        </div>
+                        <textarea formControlName="additionalContext" rows="10" cols="30"
+                            pInputTextarea class="w-full custom-textarea border-round-lg"></textarea>
+                    </div>
+                    <div class="pt-6">
+                        <button class="submit-btn text-2xl flex justify-content-center w-full" id="triggerDiv"
+                            [disabled]="(formSubmitted || (!formSubmitted && !this.userInputSheets[0].fileUploaded) || ((!formSubmitted && !this.userInputSheets[0].fileUploaded) && this.checkFileUploaded() == false)) ? true : false">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="additional-context-container border-round-lg  w-4 relative flex p-3 ">
+            <div class="flex flex-column w-full gap-3">
+                <div class=" font-semibold input-context-text question-heading-title"> User Input Sheet </div>
+                    <div class="question-container flex flex-column overflow-y-auto row-gap-4 mt-5">
+                        <div class="flex flex-column gap-2">
+                            <div class="flex flex-column gap-2">
+                                <span class="question-type-text font-bold">Inputs received</span>
+                                <div class="additional-context-subheader text-xs font-semibold">
+                                    Validate the inputs received by selecting one question at a time
+                                </div>
+                            </div>
+                            <div class="card flex flex-column gap-2">
+                                <div class="flex align-items-center gap-2"
+                                    *ngFor="let question of getReceivedQuestions()">
+                                    <p-checkbox [(ngModel)]="question.selected" [binary]="true"
+                                        (onChange)="showModal('inputs-received', question)">
+                                    </p-checkbox>
+                                    <div>{{ question.question }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-column gap-2">
+                            <div class="flex flex-column gap-2">
+                                <span class="question-type-text font-bold">Inputs not received</span>
+                                <div class="additional-context-subheader text-xs font-semibold">
+                                    Inputs need to be answered first to validate
+                                </div>
+                            </div>
+                            <div class="card flex flex-column gap-2">
+                                <div class="flex align-items-center gap-2"
+                                    *ngFor="let question of getNotReceivedQuestions()">
+                                    <p-checkbox [(ngModel)]="question.selected" [binary]="true"
+                                        (onChange)="showModal('inputs-not-received', question)">
+                                    </p-checkbox>
+                                    <div>{{ question.question }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="question-generation-container border-round-lg w-4 flex flex-column p-3">
+                @if(validateQuestion.length){
+                    <div class="flex flex-row gap-2">
+                        <span class=" font-semibold input-context-text question-heading-title"> Validate Input </span>
+                        <img src="validate_input.svg" alt="Uploaded" class="cursor-pointer" />
+                    </div>
+                    <div class="flex flex-column justify-content-between h-full">
+                    <div class="flex flex-column justify-content-between answer-container  overflow-y-auto p-3 ">
+                        <div *ngFor="let question of validateQuestion"
+                            class="answers flex flex-column bg-green-100 border-green-200 w-full mt-6 border-round ">
+                            <div class=" p-2">
+                                <div class="flex flex-row align-items-center justify-content-between mb-2">
+                                    <div class="qst-unanswered ">{{question?.question}}</div>
+                                       <div class="remove_qst-unanswered p-1 border-round-2xl">
+                                           <i class="fa-solid fa-xmark cursor-pointer border-round-md text-xs" 
+                                           (keydown.enter)="removeValidated(question)" (click)="removeValidated(question)"></i>
+                                       </div>
+                                </div>
+                                <div class=" border-1 p-3 answer-panel overflow-y-auto text-justify ">
+                                    {{question?.answer}}
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div>
+                    <button class="generate-btn text-xl flex justify-content-center w-full border-round-lg cursor-pointer mt-6"
+                        id="triggerDiv" [disabled]="questionSheet.length == 0 && validateQuestion.length != 0 ? false : true"
+                        (onClick)="generateAnswer()">GenerateQuestion Features & Business Requirements</button>
+                    </div>
+                </div>
+                }
+        </div>
+
+
+    </div>
+</div>
+
+<p-dialog class="validate-box" [header]="inputReceived ? 'Validate the inputs received' : 'Provide the inputs not yet received'"
+    [modal]="true" [(visible)]="questionValidationIsVisible" [style]="{ width: '45rem' }" >
+    <div class=" mb-3">{{selectedQuestion.question}}</div>
+    <textarea rows="7" cols="30" pInputTextarea [(ngModel)]="selectedQuestion.answer"
+        class="w-full mb-3 p-2 overflow-y-auto custom-textarea border-round-lg"></textarea>
+    <div *ngIf="inputReceived" class="flex justify-content-center gap-4">
+        <div class="reject-btn">
+        <p-button label="Reject" [disabled]="loading"  severity="danger"(onClick)="updateValidationCancel(selectedQuestion)"/>
+        </div>
+        <div class="validate-btn">
+        <p-button label="Validate" [disabled]="loading"  severity="success" (onClick)="selectedQuestion ? updateBulkQuestionValidation(selectedQuestion, true) : null;"/>
+        </div>
+    </div>
+    <div *ngIf="!inputReceived" class="flex justify-content-center gap-4">
+        <div class="no-cancel-btn">
+        <p-button label="No, cancel"  (onClick)="questionInputApprovedCancel(selectedQuestion);" />
+        </div>
+        <div class="save-btn">
+        <p-button label="Save" (onClick)="selectedQuestion ? questionInputApproved(selectedQuestion) : null; questionValidationIsVisible = false"/>
+        </div>
+    </div>
+</p-dialog>
+
+<p-dialog class="delete-dialog flex flex-column align-content-center justify-content-evenly " [modal]="true"
+    [(visible)]="closeVisible" [style]="{ width: '26rem'}">
+    <div class="flex justify-content-center font-semibold pb-6">Are you Sure you want to send the question back to user
+        input sheet?</div>
+    <div class="flex justify-content-center gap-4">
+        <div class="confirm-btn">
+            <p-button label="Yes,Confirm" (onClick)="selectedValidatedQuestion ? questionBackToSheet(selectedValidatedQuestion) : null; closeVisible = false " />
+        </div>
+        <div class="cancel-btn">
+            <p-button label="No,Cancel" (onClick)="closeVisible = false; selectedValidatedQuestion = null;" />
+        </div>
+    </div>
+</p-dialog>

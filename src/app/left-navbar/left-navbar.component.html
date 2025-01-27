@@ -1,0 +1,156 @@
+<div *ngIf="sidebarVisible" class="sidebar" [ngClass]="isSideNavOpened ? 'open' : ''">
+    <div class="flex flex-wrap gap-3 align-items-center ">
+      <i
+      [ngClass]="isSideNavOpened ? 'bx-menu-alt-right' : 'bx-menu'"
+      (click)="toggleSideBar()" (keydown.enter)="toggleSideBar()"
+      class="fa fa-bars"
+      id="btn"
+      ></i>
+      <div *ngIf="isSideNavOpened" class="logo_name_menu">Menu</div>
+      <div *ngIf="isSideNavOpened"><img src="search.svg" alt="Uploaded" class="cursor-pointer" /></div>
+      <div *ngIf="isSideNavOpened"><img src="exercise_btn.svg" alt="Uploaded" class="cursor-pointer" /></div>
+      <div *ngIf="isSideNavOpened"><img src="mainmenu_btn.svg" alt="Uploaded" class="cursor-pointer" /></div>
+    </div>
+    <div class="horizontal-line"></div>
+<div class=" flex w-full h-full overflow-y-auto p-3 ">
+    <div *ngIf="isSideNavOpened" class="w-full ">
+
+      <div class="tree-container flex flex-column gap-2 ">
+        <!-- Header Label -->
+        <div class="header border-round-xl border-round-bottom w-full flex gap-2 p-3 align-items-center" (click)="toggleTree()" tabindex="0">
+          <!-- <span>{{ isTreeVisible ? '▼' : '▲' }}</span> -->
+          <div ><img src="study_text.svg" alt="Uploaded" class="cursor-pointer pt-1" /></div>
+          <span class="header-label">Study Text</span>
+        </div>
+      
+        <!-- Tree Structure -->
+        <div class="tree" *ngIf="isTreeVisible">
+          <ul class="border-round-xl border-round-top ">
+            <li>
+              <details>
+                <summary class="" >The five basic principles of Lean</summary>
+                <ul>
+                  <div><li>Child 1.1</li></div>
+                  <li>
+                    <details class="details">
+                      <summary class="detail-summary">Child 1.2</summary>
+                      <ul>
+                        <li>Grandchild 1.2.1</li>
+                        <li>Grandchild 1.2.2</li>
+                      </ul>
+                    </details>
+                  </li>
+                  <li>Child 1.3</li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>The five basic principles of Philosophy</summary>
+                <ul>
+                  <li>Child 2.1</li>
+                  <li>Child 2.2</li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </div>
+
+        <div class="header border-round-xl w-full flex gap-2 p-3 align-items-center" (click)="mainMenu()" tabindex="0">
+          <!-- <span>{{ isTreeVisible ? '▼' : '▲' }}</span> -->
+          <!-- <div ><img src="study_text.svg" alt="Uploaded" class="cursor-pointer pt-1" /></div> -->
+          <div class="Main_menu"><i class="menu_icon fa-solid fa-bars pt-1"></i></div>
+          <span class="header-label">Main menu</span>
+        </div>
+      
+        <!-- Tree Structure -->
+        <div class="tree" *ngIf="isMainMenu">
+          <ul>
+            <li>
+              <details>
+                <summary class="sub-list" >The five basic principles of Lean</summary>
+                <ul>
+                  <li>Child 1.1</li>
+                  <li>
+                    <details>
+                      <summary>Child 1.2</summary>
+                      <ul>
+                        <li>Grandchild 1.2.1</li>
+                        <li>Grandchild 1.2.2</li>
+                      </ul>
+                    </details>
+                  </li>
+                  <li>Child 1.3</li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details>
+                <summary>The five basic principles of Philosophy</summary>
+                <ul>
+                  <li>Child 2.1</li>
+                  <li>Child 2.2</li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      
+      
+    </div>
+</div>
+</div>
+
+
+
+
+
+
+    <!-- <div *ngIf="isSideNavOpened">
+    <ul class="tree">
+        <li>
+          <details open>
+            <summary>Giant planets</summary>
+            <ul>
+              <li>
+                <details>
+                  <summary>Gas giants</summary>
+                  <ul>
+                    <li>Jupiter</li>
+                    <li>Saturn</li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <details>
+                  <summary>Ice giants</summary>
+                  <ul>
+                    <li>Uranus</li>
+                    <li>Neptune</li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+          </details>
+        </li>
+      </ul>
+    </div> -->
+    
+    <!-- <ul class="nav-list" *ngIf="navItems">
+      <li *ngFor="let navItem of navItems">
+        <a
+        [routerLink]="navItem.url"
+          routerLinkActive="active-nav-item"
+          (click)="setActivePAge(navItem)"
+        >
+          <i
+            [ngClass]="navItem.icon"
+            aria-hidden="true"
+            title="{{ navItem.name }}"
+          ></i>
+          <span class="links_name ">{{ navItem.name }}</span>
+        </a>
+      </li>
+    </ul> -->

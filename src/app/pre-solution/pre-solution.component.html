@@ -1,0 +1,204 @@
+<app-header></app-header>
+<div class="digital-loan-container">
+    <div *ngIf="loading" class="loading-container flex align-items-center justify-content-center w-full h-full absolute top-0 left-0">
+        <img src="loading.gif" alt="Loading..." class="loading-gif">
+    </div>
+    <p-toast />
+    <div class="flex">
+        <div class="input-container w-4 flex relative flex-column gap-4 p-3">
+            <div class="flex flex-column gap-2 ml-2">
+                <div class="font-semibold input-context-text">High-Level Solution Description</div>
+            </div>
+            <form class="flex flex-column ml-2" [formGroup]="solutionContextForm">
+                <div class="flex flex-column gap-2">
+                    <div class="industry-context-text font-semibold flex flex-row align-items-center ">
+                        Applicable Business Area
+                        <img src="info.png" class="info-icon" alt=""
+                            pTooltip="Select the industry relevant to the project to help tailor the solution and align with specific requirements."
+                            [tooltipOptions]="tooltipOptions" />
+                    </div>
+                    <textarea formControlName="industry" rows="2" cols="30" pInputTextarea class="w-full"></textarea>
+                    
+                </div>
+
+                <div class="flex flex-column gap-2">
+                    <div class="industry-context-text font-semibold flex flex-row align-items-center pt-2">
+                        Problem Statement (Max 1000 words)
+                        
+                        <img src="info.png" class="info-icon" alt=""
+                            pTooltip="Describe the key challenges or problems faced by the business that the solution aims to address."
+                            [tooltipOptions]="tooltipOptions" />
+                    </div>
+                    <textarea formControlName="problemStatement" rows="6" cols="30" pInputTextarea class="w-full"
+                        [autoResize]="true" style="max-height: 350px; overflow-y: auto;"></textarea>
+                        <div class="text-lg line-height-3 cannot-line" *ngIf="(solutionContextForm.get('problemStatement')?.errors) != null ">
+                            This section cannot exceed more than 1000 words
+                        </div>
+                </div>
+
+                <div class="flex flex-column gap-2">
+                    <div class="industry-context-text font-semibold flex flex-row align-items-center pt-2">
+                        Vision (250 words max)
+                        <img src="info.png" class="info-icon" alt=""
+                            pTooltip="Provide a brief, clear statement about the desired outcome or goal of implementing this solution."
+                            [tooltipOptions]="tooltipOptions" />
+                    </div>
+                    <textarea formControlName="vision" rows="4" cols="30" pInputTextarea class="w-full vision-textarea"
+                        placeholder="Describe Your Vision" [autoResize]="true"  style="max-height: 250px; overflow-y: auto;"></textarea>
+                        <div class="text-lg line-height-3 cannot-line" *ngIf="(solutionContextForm.get('vision')?.errors) != null ">
+                            This section cannot exceed more than 250 words
+                        </div>
+                </div>
+
+                <div class="flex flex-column gap-2">
+                    <div class="industry-context-text font-semibold flex flex-row align-items-center pt-2">
+                        Target Audience (100 words Max)
+                        <img src="info.png" class="info-icon" alt=""
+                            pTooltip="Specify the primary stakeholders or users of the solution, including roles and their relationship to the system."
+                            [tooltipOptions]="tooltipOptions" />
+                    </div>
+                    <textarea formControlName="targetAudience" class="textarea-custom-content" rows="3" cols="30"
+                        pInputTextarea class="w-full" [autoResize]="true"  style="max-height: 200px; overflow-y: auto;"></textarea>
+                        <div class="text-lg line-height-3 cannot-line" *ngIf="(solutionContextForm.get('targetAudience')?.errors) != null ">
+                            This section cannot exceed more than 100 words
+                        </div>
+                </div>
+
+                <div class="flex flex-column gap-2">
+                    <div class="industry-context-text font-semibold flex flex-row align-items-center pt-2">
+                        Key Roles
+                        <img src="info.png" class="info-icon" alt=""
+                            pTooltip="Select the key role that is most relevant to your involvement or responsibility in the project."
+                            [tooltipOptions]="tooltipOptions" />
+                    </div>
+                    <p-multiSelect formControlName="keyRoles" [options]="keyRole" class="w-full" optionLabel="name"
+                        placeholder="Choose all roles involved in solution design." [showToggleAll]="false"
+                        [filter]="false" [showClear]="true" (onChange)="keyRoleSelect($event)" #elm />
+                </div>
+            </form>
+        </div>
+        <div class="additional-context-container w-4 relative flex">
+            <div class="flex flex-column justify-content-between gap-3">
+                <div class="flex flex-column h-full gap-3">
+                    <div class="mb-4 ">
+                        <div class="additional-context-header font-semibold">Recommended Context(Optional) </div>
+                        <div class="additional-context-subheader text-xs font-semibold">Help in order to prepare better
+                            for the design workshop </div>
+                    </div>
+                    <div class="flex flex-column gap-1">
+                        <div class="industry-context-text font-semibold flex flex-row align-items-center">
+                            Upload Reference Documents (Max 3 docs )
+                            <img src="info.png" class="info-icon" alt=""
+                                pTooltip="Upload supporting files related to the project. Accepted formats: JPEG, PNG, PDF, MP4, up to 5MB.."
+                                [tooltipOptions]="tooltipOptions" />
+                        </div>
+                        <div class="upload-reference-subheader text-xs font-semibold">Upload process flows, architecture
+                            diagrams, and related documents here. </div>
+                    </div>
+                    <form [formGroup]="additionalContextForm"
+                        class="flex flex-column justify-content-between h-full gap-5">
+
+                        <div class="flex flex-column gap-6">
+                            <div class="wrapper" id="triggerDiv">
+
+                                <input #fileInput formControlName="file" type="file" accept=".pdf,.docx"
+                                    (change)="onFileBrowse($event)" class="file-input" type="file" name="file" hidden />
+                                <svg width="38" height="32" viewBox="0 0 58 58" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg" id="triggerDiv">
+                                    <path
+                                        d="M38.6667 38.6666L29 29M29 29L19.3333 38.6666M29 29V50.75M49.2758 44.4425C51.6329 43.1575 53.4949 41.1241 54.568 38.6633C55.6411 36.2025 55.8642 33.4545 55.202 30.8528C54.5398 28.2512 53.0301 25.9441 50.9111 24.2958C48.7921 22.6475 46.1846 21.7518 43.5 21.75H40.455C39.7235 18.9206 38.3601 16.294 36.4674 14.0674C34.5746 11.8408 32.2017 10.0723 29.5271 8.89478C26.8524 7.71728 23.9457 7.16143 21.0253 7.26903C18.1049 7.37663 15.2469 8.14487 12.6662 9.51601C10.0854 10.8871 7.84911 12.8255 6.12533 15.1853C4.40155 17.5451 3.23516 20.265 2.71386 23.1405C2.19256 26.016 2.32992 28.9723 3.11559 31.787C3.90127 34.6018 5.31483 37.2018 7.25 39.3916"
+                                        stroke="#1E1E1E" stroke-width="4" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                <div class="file-format text-sm font-medium">JPEG, PNG, PDG, and MP4 formats, up to 5MB
+                                </div>
+                                <button class="choose-file-btn text-xs" id="triggerDiv">Browse File</button>
+                            </div>
+                            <div class="flex flex-column gap-4">
+                                <div class="flex flex-column gap-3" *ngFor="let media of uploadedMedia; let i = index">
+                                    <div class="document-file p-3 flex justify-content-between align-items-center">
+                                        <div class="flex flex-column ">
+                                            <div class="document-name font-bold">{{ media.FileName }}</div>
+                                            <div class="uploading-file font-medium" *ngIf="media.FileProgress !== 100">
+                                                {{
+                                                media.FileProgress }}% Uploading . {{
+                                                media.FileSize }}</div>
+                                            <div class="file-upload-states" *ngIf="media.FileProgress === 100">Upload
+                                                complete
+                                            </div>
+                                        </div>
+                                        <div class="flex align-items-center gap-2">
+                                            <div class="progress" *ngIf="media.FileProgress !== 100">
+                                                <div>
+                                                    <div class="first-progress">
+                                                        <div [ngStyle]="{ 'width.%': media.FileProgress }"
+                                                            class="second-progress">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="media.FileProgress === 100"
+                                                class="border-1 states-icon flex align-items-center justify-content-center">
+                                                <i class="fa-solid fa-check text-lg"></i>
+                                            </div>
+                                            <i (keydown.enter)="removeImage(i)" (click)="removeImage(i)"
+                                                class="fa-solid fa-xmark cursor-pointer close-icon"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-column gap-5">
+                            <div class="felx flex-column gap-2">
+                                <div class="industry-context-text font-semibold flex flex-row align-items-center ">
+                                    Additional Context (Optional Max 1000 words)
+                                    <img src="info.png" class="info-icon" alt=""
+                                        pTooltip="Include extra details such as specific technical requirements, API integrations, or constraints."
+                                        [tooltipOptions]="tooltipOptions" />
+                                </div>
+                                <textarea rows="5" cols="30" pInputTextarea class="w-full"
+                                    formControlName="additionalContext" [autoResize]="true" style="max-height: 350px; overflow-y: auto;"></textarea>
+                                <div class="text-lg line-height-3 cannot-line" *ngIf="(additionalContextForm.get('additionalContext')?.errors) != null ">
+                                    This section cannot exceed more than 1000 words
+                                </div>
+                            </div>
+                            <div class="flex flex-column align-items-center justify-content-center gap-2">
+                                <span
+                                    *ngIf="regenerateBtnControl && !(currentFileChanges || (additionalContextForm.dirty || solutionContextForm.dirty))"
+                                    class="red-text"> 
+                                    Regenerate inputs for design workshop, please edit any of the input fields
+                                </span>
+                                <button *ngIf="contextCreateBtnEnable" type="submit" class="submit-btn w-full"
+                                    (click)="solutionContextOnsubmit()">Start</button>
+                                <button *ngIf="!contextCreateBtnEnable" type="submit" class="submit-btn w-full"
+                                    (click)="generateAdditionalContext()"
+                                    [disabled]="(additionalContextForm.invalid || solutionContextForm.invalid) ||!( additionalContextForm.dirty || (solutionContextForm.dirty || currentFileChanges)) ? true : false">
+                                    <i *ngIf="questionGenerated" class="fa-solid fa-rotate"></i>
+                                    {{ questionGenerated
+                                    ? 'RE- GENERATE' : 'Generate inputs for design workshop'}}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="question-generation-container w-4 relative flex align-items-between justify-content-center">
+            @if(!questionGenerationPanel) {
+            <div class="icon-container-input cursor-pointer align-items-center justify-content-center flex">
+                <img src="right-chrvet.png" alt="right" />
+            </div>
+            <div class="design-workshop font-semibold flex align-items-center justify-content-center">Inputs to be
+                Gathered In Design Workshop</div>
+            }
+            @if(questionGenerationPanel){
+                <app-question-generation  [updateNewQuestion]="generatedQuestions"
+                [selectedSolutionID]="selectedSolutionID" [selectedAdditionalContextID]="selectedAdditionalContextID"
+                (questionChanges)="questionChanges($event)">
+            </app-question-generation>
+            }        
+        </div>
+    </div>
+</div>

@@ -1,0 +1,219 @@
+.choose-file-btn {
+    width: 211px;
+    height: 25px;
+    color: #FFFFFF;
+    background-color: #16A34A;
+}
+.digital-loan0container {
+    padding: 34px 43px 0px 13px;
+}
+.input-container {
+    background-color: #F9FAFB;
+    .input-context-text {
+        line-height: 33px;
+        color: #216B40;
+        font-size: 23px;
+    }
+    .submit-btn:disabled {
+        background: #E5E5E5;
+        color: #B2AFAF;
+        border: 1px solid #B2AFAF;
+        padding: 15px;
+        width: 573px;
+        height: 74px;
+        font-size: 43px;
+        cursor: pointer;
+        border-radius: 7px;
+        box-shadow: 0px 4px 4px 0px #00000040;
+    }
+    .submit-btn {
+        background: #16A34A;
+        color: #C4E7CC;
+        height: 64px;
+        border: 1px solid #B2AFAF;
+    }
+}
+.industry-context-text {
+    font-size: 16px;
+    line-height: 26px;
+    color: #4C986E;
+    .info-icon {
+        width: 20px;
+        height: 20px;
+    }
+}
+.answers{
+    height: 300px;
+    border: 5px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+.answer-panel {
+    display: inline-block;
+    word-wrap: break-word;
+    max-width: 100%; 
+    width: 100%; 
+    height: 150px ;
+    border-radius: 10px;
+    background-color: white;
+    padding: 10px 5px 5px 5px;
+    border: 5px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    box-sizing: border-box; 
+    overflow-x: auto;
+}
+.question-heading-title {
+    font-size: 23px;
+    line-height: 33px;
+    color: #216B40;
+}
+.filename{
+    color: #0031F4;
+}
+.cannot-line {
+    color: #E71919;
+}
+.additional-context-container {
+    box-shadow: 0px 4px 4px 0px #00000040;
+    .additional-context-subheader{
+        line-height: 13px;
+        color: #4C986E;
+    }
+}
+.additional-context {
+    font-size: 20px;
+    line-height: 52px;
+    color: #216B40;
+}
+.question-container {
+    height: 600px;
+    border-radius: 10px;
+    padding: 30px 13px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+    border: 1px solid #8AEFAF;
+}
+  .question-type-text {
+    color: #16A34A
+}
+::ng-deep {
+    .delete-dialog{
+    .p-dialog {
+        border: 1px solid #8AEFAF;
+        border-radius: 12px;
+        box-shadow: 0px 4px 4px 0px #00000040;
+    }
+    .p-dialog-header-icons {
+        background-color: #b5b8bc;
+        border-radius: 50%;
+    }
+    .p-dialog .p-dialog-header {
+        padding: 2px !important;
+    }
+    .confirm-btn {
+        .p-button {
+            background-color: #FF0000;
+            border: 1px solid #FF0000;
+            color: #F5F5F5;
+            box-shadow: 0px 4px 4px 0px #00000040;
+        }
+    }
+    .cancel-btn {
+        .p-button {
+            background-color: #E5E5E5;
+            color: #7F8580;
+            box-shadow: 0px 4px 4px 0px #00000040;
+            border: 1px solid #B2AFAF;
+        }
+    }
+}
+.validate-box{
+    .p-dialog .p-dialog-header{
+        color: #216B40;
+    }
+}
+.reject-btn {
+        .p-button {
+            background-color: #FF0000;
+            color: #F5F5F5;
+            box-shadow: 0px 4px 4px 0px #00000040;
+        }
+    }
+    .validate-btn {
+        .p-button {
+            background-color: #16A34A;
+            color: #C4E7CC;
+            box-shadow: 0px 4px 4px 0px #00000040;
+            border: 1px solid #B2AFAF;
+        }
+    }
+    .no-cancel-btn {
+        .p-button {
+            background-color: #E5E5E5;
+            color: #4F4F4F;
+            box-shadow: 0px 4px 4px 0px #00000040;
+            border: 1px solid #4F4F4F;
+        }
+    }
+    .save-btn {
+        .p-button {
+            background-color: #16A34A; 
+            color: #C4E7CC;
+            box-shadow: 0px 4px 4px 0px #00000040;
+            border: 1px solid #B2AFAF;
+        }
+    }
+    .p-tooltip {
+        .p-tooltip-arrow {
+          background-color: #FFFFFF;
+        }
+        .p-tooltip-text {
+          border: 1px solid #919090;
+          color: #757E8F;
+          background-color: #FFFFFF;
+          font-weight: 700;
+        }
+      }
+}
+.custom-textarea {
+    border: 1px solid #8AEFAF;
+    box-shadow: 0px 4px 4px 0px #00000040;
+  }
+  .generate-btn:disabled {
+    background: #E5E5E5;
+    color: #B2AFAF;
+    border: 1px solid #B2AFAF;
+    font-size: 43px;
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+.generate-btn {
+    background: #16A34A;
+    color: #C4E7CC;
+    height: 64px;
+    border: 1px solid #B2AFAF;
+}
+.upload-text{
+    color: #C4E7CC;
+}
+.answer-container{
+    height: 650px;
+}
+.loading-container {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    z-index: 1100; 
+}
+.loading-gif {
+    width: 50px; 
+    height: 50px;
+}
+.remove_qst-unanswered {
+    background: #6B7688;
+    color: #ffffff;
+    font-size: 8px;
+    transition: background-color 0.3s ease;
+}
+.remove_qst-unanswered:hover {
+    background: #FF0000;
+}

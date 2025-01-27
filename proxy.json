@@ -1,0 +1,11 @@
+{
+    "/api": {
+      "target": "https://be-app-san-wkb-nb-dev-e2hmfzh8hvbgd7g4.southafricanorth-01.azurewebsites.net",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug",
+      "pathRewrite": {
+      "^/api": ""
+    }
+    }
+  }
